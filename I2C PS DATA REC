@@ -75,5 +75,5 @@ if(buttons1>>5) Serial.print("L3");
 if(buttons1>>6) Serial.print("R1");
 if(buttons1>>7) Serial.print("L1");
 
-
+Serial.println();
 }
