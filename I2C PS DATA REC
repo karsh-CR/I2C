@@ -1,0 +1,79 @@
+#include<Wire.h>
+#define slave_addr 8 
+void receive(int a);
+uint8_t LX = Wire.read();
+uint8_t LY;
+uint8_t RX;
+uint8_t RY;
+uint8_t R2;
+uint8_t L2;
+uint8_t buttons1;
+uint8_t buttons2;
+
+void setup() {
+  Wire.begin(slave_addr);
+  Wire.onReceive(receive);
+ Serial.begin(115200);
+ Serial.println("inside setup");
+}
+
+void loop() {
+ 
+//Serial.println("hello") ;
+
+}
+
+void receive(int a){
+
+while(Wire.available() >0 ){
+
+//collect
+uint8_t LX = Wire.read();
+uint8_t LY = Wire.read();
+uint8_t RX = Wire.read();
+uint8_t RY = Wire.read();
+uint8_t R2 = Wire.read();
+uint8_t L2 = Wire.read();
+uint8_t buttons1 = Wire.read();
+uint8_t buttons2 = Wire.read();
+}
+//print anal
+Serial.print("RX : ");
+Serial.println(LX);
+
+Serial.print("RY : ");
+Serial.println(LY);
+
+Serial.print("LX : ");
+Serial.println(RX);
+
+Serial.print("LY : ");
+Serial.println(RY);
+
+Serial.print("R2 : ");
+Serial.println(R2);
+
+Serial.print("L2 : ");
+Serial.println(L2);
+
+//print buttons
+if(buttons>>0) Serial.print(" X ");
+if(buttons>>1) Serial.print(" O ");
+if(buttons>>2) Serial.print(" |_| ");
+if(buttons>>3) Serial.print("Triangle");
+if(buttons>>4) Serial.print("^");
+if(buttons>>5) Serial.print("donw");
+if(buttons>>6) Serial.print("<--");
+if(buttons>>7) Serial.print("-->");
+
+if(buttons1>>0) Serial.print("Options");
+if(buttons1>>1) Serial.print("Touchpad");
+if(buttons1>>2) Serial.print("Share");
+if(buttons1>>3) Serial.print("PSBUtton");
+if(buttons1>>4) Serial.print("R3");
+if(buttons1>>5) Serial.print("L3");
+if(buttons1>>6) Serial.print("R1");
+if(buttons1>>7) Serial.print("L1");
+
+
+}
