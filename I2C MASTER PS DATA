@@ -1,0 +1,82 @@
+#include <Wire.h>
+#include <PS4Controller.h>
+#define SLAVEADDR 8
+int num = 0;
+void setup() {
+  // put your setup code here, to run once:
+  Serial.begin(9600);
+  Wire.begin();
+  PS4.begin();
+}
+
+void loop() {
+  // put your main code here, to run repeatedly:
+  Wire.beginTransmission(SLAVEADDR);
+  if (!PS4.isConnected()) {
+    Serial.println("PS4 nto connected");
+    return;
+  }
+  
+  int8_t LX = PS4.LStickX();
+  int8_t LY = PS4.LStickY();
+  int8_t RX = PS4.RStickX();
+  int8_t RY = PS4.RStickY();
+  int8_t R2 = PS4.L2();
+  int8_t L2 = PS4.R2();
+  
+  uint8_t buttons = 0;
+  buttons |= PS4.Cross() << 0;
+  buttons |= PS4.Circle() << 1;
+  buttons |= PS4.Square() << 2;
+  buttons |= PS4.Triangle() << 3;
+  buttons |= PS4.Up() << 4;
+  buttons |= PS4.Down() << 5;
+  buttons |= PS4.Left() << 6;
+  buttons |= PS4.Right() << 7;
+  
+  uint8_t buttons1=0;
+  buttons1 |= PS4.Options() << 0;
+  buttons1 |= PS4.Touchpad() << 1;
+  buttons1 |= PS4.Share() << 2;
+  buttons1 |= PS4.PSButton() << 3;
+  buttons1 |= PS4.R3() << 4;
+  buttons1 |= PS4.L3() << 5;
+  buttons1 |= PS4.R1() << 6;
+  buttons1 |= PS4.L1() << 7;
+
+Wire.write(LX);
+Wire.write(LY);
+Wire.write(RX);
+Wire.write(RY);
+Wire.write(R2);
+Wire.write(L2);
+Wire.write(buttons);
+Wire.write(buttons1);
+  
+  // Serial.printf("LX : %d\n", PS4.LStickX());
+
+  // Serial.printf("LY : %d\n", PS4.LStickY());
+
+  // Serial.printf("RX : %d\n", PS4.RStickX());
+
+  // Serial.printf("RY : %d\n", PS4.RStickY());
+
+  // Serial.printf("RY : %d\n", PS4.L2());
+
+  // Serial.printf("RY : %d\n", PS4.R2());
+  // Serial.println();
+  Wire.endTransmission();
+  delay(5);
+}
+
+
+
+// Wire.beginTransmission(SLAVEADDR);
+// Wire.write(num);
+// Wire.endTransmission();
+// Serial.println("Sent : ");
+// Serial.println(num);
+// num++;
+// delay(500);
+// if(num>25) num=0;
+// }
